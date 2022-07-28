@@ -3,6 +3,8 @@ import Head from "next/head";
 import { Counter } from "../components/Counter";
 import useSWR from "swr";
 
+import TopN from "../components/TopNCases"
+
 interface GlobalData {
   confirmed: {
     detail: string;
@@ -50,8 +52,8 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <h1 className="text-center font-bold text-white text-4xl my-4">
-        Salabite 🥰
+      <h1 className="text-center font-bold text-white text-4xl my-4 italic">
+        Wear your mask 😷! 
       </h1>
 
       {/* Global */}
@@ -77,6 +79,9 @@ const Home: NextPage = () => {
           </div>
         </div>
       </section>
+
+      {/* Top 20 */}
+      <TopN />
     </div>
   );
 };
