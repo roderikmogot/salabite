@@ -1,50 +1,46 @@
-import type { NextPage } from 'next'
-import Head from 'next/head'
-import Image from 'next/image'
-import useSWR from 'swr'
+import type { NextPage } from "next";
+import Head from "next/head";
+import { Counter } from "../components/Counter";
+import useSWR from "swr";
 
-interface GlobalData{
+interface GlobalData {
   confirmed: {
     detail: string;
     value: number;
-  },
+  };
   countryDetail: {
     pattern: string;
     example: string;
-  },
-  dailySummary: string,
+  };
+  dailySummary: string;
   dailyTimeSeries: {
     pattern: string;
     example: string;
-  },
+  };
   deaths: {
     detail: string;
     value: number;
-  },
-  image: string,
-  lastUpdate: Date,
+  };
+  image: string;
+  lastUpdate: Date;
   recovered: {
     detail: string;
     value: number;
-  },
-  source: string
+  };
+  source: string;
 }
 
 const Home: NextPage = () => {
-  const fetcher = (url: string) => fetch(url).then(res => res.json())
-  const {data, error} = useSWR('https://covid19.mathdro.id/api', fetcher, {
-    refreshInterval: 1000
-  })
+  const fetcher = (url: string) => fetch(url).then((res) => res.json());
+  const { data, error } = useSWR("https://covid19.mathdro.id/api", fetcher, {
+    refreshInterval: 1000,
+  });
 
-  if(!data){
-    return <div>Loading....</div>
+  if (!data) {
+    return <div>Loading....</div>;
   }
 
-  const globalData: GlobalData = data
-
-  const commafy = (num: number): string => {
-    return num.toLocaleString()
-  }
+  const globalData: GlobalData = data;
 
   return (
     <div>
@@ -54,28 +50,35 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <h1 className='text-center font-bold text-white text-4xl my-4'>Salabite 🥰</h1>
+      <h1 className="text-center font-bold text-white text-4xl my-4">
+        Salabite 🥰
+      </h1>
 
       {/* Global */}
       <section className="w-full">
-        <div className='grid gap-4 lg:grid-cols-3 lg:grid-rows-1'>
-          <div className='bg-gray-400 shadow-md shadow-gray-500 p-4 mx-4'>
-            <div className='font-bold text-xl'>Confirmed</div>
-            <div className='font-black text-4xl text-right'>{commafy(globalData.confirmed.value)}</div>
+        <div className="grid gap-4 lg:grid-cols-3 lg:grid-rows-1">
+          <div className="bg-gray-400 shadow-md shadow-gray-500 p-4 mx-4">
+            <div className="font-bold text-xl">Confirmed</div>
+            <div className="font-black text-4xl text-right">
+              <Counter from={0} to={globalData.confirmed.value} />
+            </div>
           </div>
-          <div className='bg-green-400 shadow-md shadow-gray-500 p-4 mx-4'>
-            <div className='font-bold text-xl'>Recovered</div>
-            <div className='font-black text-4xl text-right'>{commafy(globalData.recovered.value)}</div>
+          <div className="bg-green-400 shadow-md shadow-gray-500 p-4 mx-4">
+            <div className="font-bold text-xl">Recovered</div>
+            <div className="font-black text-4xl text-right">
+              <Counter from={0} to={globalData.recovered.value} />
+            </div>
           </div>
-          <div className='bg-red-400 shadow-md shadow-gray-500 p-4 mx-4'>
-            <div className='font-bold text-xl'>Deaths</div>
-            <div className='font-black text-4xl text-right'>{commafy(globalData.deaths.value)}</div>
+          <div className="bg-red-400 shadow-md shadow-gray-500 p-4 mx-4">
+            <div className="font-bold text-xl">Deaths</div>
+            <div className="font-black text-4xl text-right">
+              <Counter from={0} to={globalData.deaths.value} />
+            </div>
           </div>
         </div>
       </section>
-      
     </div>
-  )
-}
+  );
+};
 
-export default Home
+export default Home;
