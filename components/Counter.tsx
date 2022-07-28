@@ -1,12 +1,12 @@
 import { animate } from "framer-motion";
 import React, { useEffect, useRef } from "react";
 
-const commafy = (num: number): string => {
+const commafy = (num: string) => {
   return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
 };
 
 export function Counter({ from, to }: { from: number; to: number }) {
-  const nodeRef = useRef<HTMLSpanElement>();
+  const nodeRef = useRef<HTMLSpanElement>(document.createElement("span"));
 
   useEffect(() => {
     const node = nodeRef.current;

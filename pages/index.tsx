@@ -52,7 +52,7 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <h1 className="text-center font-bold text-white text-4xl my-4 italic">
+      <h1 className="text-center font-black text-white text-4xl my-4 italic">
         Wear your mask 😷! 
       </h1>
 
