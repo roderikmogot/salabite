@@ -1,9 +1,7 @@
-import type { NextPage } from "next";
 import Head from "next/head";
 import { Counter } from "../components/Counter";
-import useSWR from "swr";
-
-import TopN from "../components/TopNCases"
+import type { GetServerSideProps } from "next";
+import TopN from "../components/TopNCases";
 
 interface GlobalData {
   confirmed: {
@@ -32,18 +30,8 @@ interface GlobalData {
   source: string;
 }
 
-const Home: NextPage = () => {
-  const fetcher = (url: string) => fetch(url).then((res) => res.json());
-  const { data, error } = useSWR("https://covid19.mathdro.id/api", fetcher, {
-    refreshInterval: 1000,
-  });
-
-  if (!data) {
-    return <div>Loading....</div>;
-  }
-
+const Home = ({ data }: { data: GlobalData }) => {
   const globalData: GlobalData = data;
-
   return (
     <div>
       <Head>
@@ -53,7 +41,7 @@ const Home: NextPage = () => {
       </Head>
 
       <h1 className="text-center font-black text-white text-4xl my-4 italic">
-        Wear your mask 😷! 
+        Wear your mask 😷!
       </h1>
 
       {/* Global */}
@@ -87,3 +75,14 @@ const Home: NextPage = () => {
 };
 
 export default Home;
+
+export const getServerSideProps: GetServerSideProps = async () => {
+  const data = await fetch("https://covid19.mathdro.id/api").then((res) =>
+    res.json()
+  );
+  return {
+    props: {
+      data,
+    },
+  };
+};
