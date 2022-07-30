@@ -1,7 +1,7 @@
 import Head from "next/head";
 import { Counter } from "../components/Counter";
 import type { GetServerSideProps } from "next";
-import TopN from "../components/TopNCases";
+import Navbar from "../components/Navbar";
 
 interface GlobalData {
   confirmed: {
@@ -40,28 +40,28 @@ const Home = ({ data }: { data: GlobalData }) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <h1 className="text-center font-black text-white text-4xl my-4 italic">
-        Wear your mask 😷!
+      <h1 className="mt-8 text-center text-4xl lg:text-8xl">
+        <span className="not-italic font-black text-transparent bg-clip-text bg-gradient-to-r from-blue-700 to-red-400">COVID-19</span> 🌍
       </h1>
 
       {/* Global */}
-      <section className="w-full">
+      <section className="w-full mt-4">
         <div className="grid gap-4 lg:grid-cols-3 lg:grid-rows-1">
           <div className="bg-gray-400 shadow-md shadow-gray-500 p-4 mx-4">
-            <div className="font-bold text-xl">Confirmed</div>
-            <div className="font-black text-4xl text-right">
+            <div className="font-bold text-md lg:text-xl">Confirmed</div>
+            <div className="font-black text-lg lg:text-4xl text-right">
               <Counter from={0} to={globalData.confirmed.value} />
             </div>
           </div>
           <div className="bg-green-400 shadow-md shadow-gray-500 p-4 mx-4">
-            <div className="font-bold text-xl">Recovered</div>
-            <div className="font-black text-4xl text-right">
+            <div className="font-bold text-md lg:text-xl">Recovered</div>
+            <div className="font-black text-lg lg:text-4xl text-right">
               <Counter from={0} to={globalData.recovered.value} />
             </div>
           </div>
           <div className="bg-red-400 shadow-md shadow-gray-500 p-4 mx-4">
-            <div className="font-bold text-xl">Deaths</div>
-            <div className="font-black text-4xl text-right">
+            <div className="font-bold text-md lg:text-xl">Deaths</div>
+            <div className="font-black text-lg lg:text-4xl text-right">
               <Counter from={0} to={globalData.deaths.value} />
             </div>
           </div>
@@ -69,7 +69,6 @@ const Home = ({ data }: { data: GlobalData }) => {
       </section>
 
       {/* Top 20 */}
-      <TopN />
     </div>
   );
 };

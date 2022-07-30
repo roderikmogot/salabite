@@ -1,5 +1,6 @@
 import "../styles/globals.css";
 import { useState, useEffect } from "react";
+import Navbar from "../components/Navbar";
 import type { AppProps } from "next/app";
 
 function MyApp({ Component, pageProps }: AppProps) {
@@ -15,7 +16,12 @@ function MyApp({ Component, pageProps }: AppProps) {
   if (typeof window === "undefined") {
     return <></>;
   } else {
-    return <Component {...pageProps} />;
+    return (
+      <>
+        <Navbar />
+        <Component {...pageProps} />
+      </>
+    );
   }
 }
 

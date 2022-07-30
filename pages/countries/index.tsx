@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
 import useSWR from "swr";
-import { Counter } from "./Counter";
+import { Counter } from "../../components/Counter";
 
 interface fetchStats {
   provinceState: string;
@@ -108,15 +108,15 @@ export default function TopNCases() {
               </h1>
               <div className="grid w-2/3 gap-4 lg:grid-cols-3 lg:grid-rows-1">
                 <div className="bg-gray-400 shadow-md shadow-gray-500 p-4 mx-4">
-                  <div className="font-bold text-xl">Confirmed</div>
-                  <div className="font-black text-4xl text-right">
+                  <div className="font-bold text-md lg:text-xl">Confirmed</div>
+                  <div className="font-black text-lg lg:text-4xl text-right">
                     <Counter from={0} to={cases.confirmed} />
                   </div>
                 </div>
 
                 <div className="bg-green-400 shadow-md shadow-gray-500 p-4 mx-4">
-                  <div className="font-bold text-xl">Recovered</div>
-                  <div className="font-black text-4xl text-right">
+                  <div className="font-bold text-md lg:text-xl">Recovered</div>
+                  <div className="font-black text-lg lg:text-4xl text-right">
                     <Counter
                       from={0}
                       to={cases.recovered ? cases.recovered : 0}
@@ -124,8 +124,8 @@ export default function TopNCases() {
                   </div>
                 </div>
                 <div className="bg-red-400 shadow-md shadow-gray-500 p-4 mx-4">
-                  <div className="font-bold text-xl">Deaths</div>
-                  <div className="font-black text-4xl text-right">
+                  <div className="font-bold text-md lg:text-xl">Deaths</div>
+                  <div className="font-black text-lg lg:text-4xl text-right">
                     <Counter from={0} to={cases.deaths} />
                   </div>
                 </div>
