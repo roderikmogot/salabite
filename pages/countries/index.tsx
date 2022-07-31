@@ -3,33 +3,36 @@ import useSWR from "swr";
 import { Counter } from "../../components/Counter";
 
 interface fetchStats {
-  provinceState: string;
-  countryRegion: string;
-  lastUpdate: number;
-  lat: number;
-  long: number;
-  confirmed: number;
+  updated: Date;
+  country: string;
+  countryInfo: {
+    _id: number;
+    iso2: string;
+    iso3: string;
+    lat: number;
+    long: number;
+    flag: string;
+  };
+  cases: number;
+  todayCases: number;
   deaths: number;
+  todayDeaths: number;
   recovered: number;
+  todayRecovered: number;
   active: number;
-  admin2: number;
-  fips: number;
-  combinedKey: string;
-  incidentRate: number;
-  peopleTested: number;
-  peopleHospitalized: number;
-  uid: number;
-  iso3: string;
-  cases28Days: number;
-  deaths28Days: number;
-  iso2: string;
-}
-
-interface stats {
-  countryRegion: string;
-  confirmed: number;
-  recovered: number;
-  deaths: number;
+  critical: number;
+  casesPerOneMillion: number;
+  deathsPerOneMillion: number;
+  tests: number;
+  testsPerOneMillion: number;
+  population: number;
+  continent: string;
+  oneCasePerPeople: number;
+  oneDeathPerPeople: number;
+  oneTestPerPeople: number;
+  activePerOneMillion: number;
+  recoveredPerOneMillion: number;
+  criticalPerOneMillion: number;
 }
 
 export default function TopNCases() {
@@ -37,7 +40,7 @@ export default function TopNCases() {
 
   const fetcher = (url: string) => fetch(url).then((res) => res.json());
   const { data, error } = useSWR(
-    "https://covid19.mathdro.id/api/confirmed",
+    "https://disease.sh/v3/covid-19/countries",
     fetcher,
     {
       refreshInterval: 1000,
@@ -47,36 +50,6 @@ export default function TopNCases() {
   if (!data) {
     return <p>Loading...</p>;
   }
-
-  const countPerCoutry = (data: fetchStats[]): stats[] => {
-    const statsPerCountry: stats[] = [];
-    for (const { countryRegion, confirmed, deaths, recovered } of data) {
-      let hasCountry = false;
-      for (let i = 0; i < statsPerCountry.length; i++) {
-        if (statsPerCountry[i].countryRegion === countryRegion) {
-          statsPerCountry[i] = {
-            ...statsPerCountry[i],
-            confirmed: confirmed + statsPerCountry[i].confirmed,
-            deaths: deaths + statsPerCountry[i].deaths,
-            recovered: recovered + statsPerCountry[i].recovered,
-          };
-          hasCountry = true;
-        }
-      }
-      if (!hasCountry) {
-        const addCountry = {
-          countryRegion,
-          confirmed,
-          deaths,
-          recovered,
-        };
-        statsPerCountry.push(addCountry);
-      }
-    }
-    return statsPerCountry;
-  };
-
-  const allCountry = countPerCoutry(data);
 
   return (
     <section className="w-full mt-4 flex items-center flex-col justify-center">
@@ -91,26 +64,26 @@ export default function TopNCases() {
           onChange={(e) => setSearch(e.target.value)}
         />
       </div>
-      {allCountry &&
-        allCountry
-          .filter((country) =>
-            country.countryRegion.toLowerCase().includes(search.toLowerCase())
+      {data &&
+        data
+          .filter((country: fetchStats) =>
+            country.country.toLowerCase().includes(search.toLowerCase())
           )
-          .sort((a, b) => b.confirmed - a.confirmed)
+          .sort((a: fetchStats, b: fetchStats) => b.cases - a.cases)
           .slice(0, 10)
-          .map((cases, i) => (
+          .map((cases: fetchStats, i: number) => (
             <>
               <h1
                 key={i}
                 className="text-center font-bold text-white text-4xl my-4"
               >
-                {cases.countryRegion}
+                {cases.country}
               </h1>
               <div className="grid w-2/3 gap-4 lg:grid-cols-3 lg:grid-rows-1">
                 <div className="bg-gray-400 shadow-md shadow-gray-500 p-4 mx-4">
                   <div className="font-bold text-md lg:text-xl">Confirmed</div>
                   <div className="font-black text-lg lg:text-4xl text-right">
-                    <Counter from={0} to={cases.confirmed} />
+                    <Counter from={0} to={cases.cases} />
                   </div>
                 </div>
 
