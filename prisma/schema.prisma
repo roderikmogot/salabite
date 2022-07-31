@@ -15,3 +15,11 @@ model Daily {
   date String
   dailyCases String
 }
+
+model Global {
+  id Int @id @default(autoincrement())
+  date String
+  confirmed String
+  recovered String
+  deaths String
+}
