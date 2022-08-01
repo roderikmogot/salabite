@@ -62,15 +62,12 @@ export default function Navbar() {
             <ul className="items-center justify-center space-y-8 md:flex md:space-x-6 md:space-y-0 md:gap-8">
               <Link href="/">
                 <li className="text-white transition duration-200 hover:text-red-400">
-                  <a href="javascript:void(0)">Home</a>
+                  <a href="#">Home</a>
                 </li>
               </Link>
-              <li className="text-white transition duration-200 hover:text-red-400">
-                <a href="javascript:void(0)">Daily</a>
-              </li>
               <Link href="/countries">
                 <li className="text-white transition duration-200 hover:text-red-400">
-                  <a href="javascript:void(0)">Countries</a>
+                  <a href="#">Countries</a>
                 </li>
               </Link>
             </ul>

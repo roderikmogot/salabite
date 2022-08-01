@@ -9,5 +9,5 @@
 }
 
 body{
-    @apply bg-body;
+    @apply bg-body overflow-x-hidden;
 }

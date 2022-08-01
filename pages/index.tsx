@@ -1,10 +1,8 @@
-import Head from "next/head";
 import { Counter } from "../components/Counter";
 import type { GetServerSideProps } from "next";
-import Navbar from "../components/Navbar";
 import moment from "moment";
 
-interface GlobalData {
+export interface GlobalData {
   updated: Date;
   cases: number;
   todayCases: number;
@@ -30,6 +28,20 @@ interface GlobalData {
 
 const Home = ({ data }: { data: GlobalData }) => {
   const globalData: GlobalData = data;
+  const {
+    cases,
+    recovered,
+    deaths,
+    active,
+    population,
+    todayCases,
+    todayRecovered,
+    todayDeaths,
+  } = globalData;
+  const casesToDeaths = (deaths / cases).toFixed(2);
+  const casesToDeathsRatio = (cases / deaths).toFixed(0);
+  const casesToRecoveredRatio = ((recovered / cases) * 100).toFixed(0);
+
   const lastUpdate = moment(globalData.updated).toString();
 
   return (
@@ -44,25 +56,92 @@ const Home = ({ data }: { data: GlobalData }) => {
       {/* Global */}
       <section className="w-full mt-4">
         <div className="grid gap-4 lg:grid-cols-3 lg:grid-rows-1">
-          <div className="bg-gray-400 shadow-md shadow-gray-500 p-4 mx-4">
-            <div className="font-bold text-md lg:text-xl">Confirmed</div>
+          <div className="bg-gray-400 shadow-md shadow-gray-500 p-4 mx-4 rounded-md">
+            <div className="font-bold text-md lg:text-xl">Total Cases</div>
             <div className="font-black text-lg lg:text-4xl text-right">
-              <Counter from={0} to={globalData.cases} />
+              <Counter from={0} to={cases} />
             </div>
           </div>
-          <div className="bg-green-400 shadow-md shadow-gray-500 p-4 mx-4">
+          <div className="bg-green-400 shadow-md shadow-gray-500 p-4 mx-4 rounded-md">
             <div className="font-bold text-md lg:text-xl">Recovered</div>
             <div className="font-black text-lg lg:text-4xl text-right">
-              <Counter from={0} to={globalData.recovered} />
+              <Counter from={0} to={recovered} />
             </div>
           </div>
-          <div className="bg-red-400 shadow-md shadow-gray-500 p-4 mx-4">
+          <div className="bg-red-400 shadow-md shadow-gray-500 p-4 mx-4 rounded-md">
             <div className="font-bold text-md lg:text-xl">Deaths</div>
             <div className="font-black text-lg lg:text-4xl text-right">
-              <Counter from={0} to={globalData.deaths} />
+              <Counter from={0} to={deaths} />
             </div>
           </div>
         </div>
+      </section>
+
+      {/* Other stats */}
+
+      {/* Daily Stats */}
+      <section className="mt-8 bg-[#5800FF] p-4 mx-4 rounded-md">
+        <section className="w-full">
+          <div className="mx-4 text-white font-black text-2xl mb-4 text-center lg:text-4xl lg:text-left">
+            Daily
+          </div>
+          <div className="grid gap-4 lg:grid-cols-3 lg:grid-rows-1">
+            <div className="bg-gray-400 shadow-md shadow-gray-500 p-4 mx-4 rounded-md">
+              <div className="font-bold text-md lg:text-xl">Active</div>
+              <div className="font-black text-lg lg:text-4xl text-right">
+                <Counter from={0} to={+todayCases} />
+              </div>
+            </div>
+            <div className="bg-green-400 shadow-md shadow-gray-500 p-4 mx-4 rounded-md">
+              <div className="font-bold text-md lg:text-xl">Recovered</div>
+              <div className="font-black text-lg lg:text-4xl text-right">
+                <Counter from={0} to={+todayRecovered} />
+              </div>
+            </div>
+            <div className="bg-red-400 shadow-md shadow-gray-500 p-4 mx-4 rounded-md">
+              <div className="font-bold text-md lg:text-xl">Death</div>
+              <div className="font-black text-lg lg:text-4xl text-right">
+                <Counter from={0} to={+todayDeaths} />
+              </div>
+            </div>
+          </div>
+        </section>
+      </section>
+
+      <section className="mt-8 bg-[#0096FF] p-4 mx-4 rounded-md">
+        <section className="w-full">
+          <div className="mx-4 text-white font-black text-2xl mb-4 text-center lg:text-4xl lg:text-left">
+            Metrics
+          </div>
+          <div className="grid gap-4 lg:grid-cols-3 lg:grid-rows-1">
+            <div className="bg-teal-400 shadow-md shadow-gray-500 p-4 mx-4 rounded-md">
+              <div className="font-bold text-md lg:text-xl">
+                World Population
+              </div>
+              <div className="font-black text-lg lg:text-4xl text-right">
+                <Counter from={0} to={+population} />
+              </div>
+            </div>
+            <div className="bg-green-400 shadow-md shadow-gray-500 p-4 mx-4 rounded-md">
+              <div className="font-bold text-md lg:text-xl">
+                Recovered Ratio
+              </div>
+              <div className="font-black text-lg lg:text-4xl text-right">
+                <Counter from={0} to={+casesToRecoveredRatio} />%{" "}
+                <span className="text-xs italic font-normal">
+                  of total cases
+                </span>
+              </div>
+            </div>
+            <div className="bg-red-400 shadow-md shadow-gray-500 p-4 mx-4 rounded-md">
+              <div className="font-bold text-md lg:text-xl">Death Ratio</div>
+              <div className="font-black text-lg lg:text-4xl text-right">
+                1:
+                <Counter from={0} to={+casesToDeathsRatio} />
+              </div>
+            </div>
+          </div>
+        </section>
       </section>
 
       <div className="font-semibold text-sm md:text-md text-white p-4 mx-4 w-full text-center">
