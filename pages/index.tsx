@@ -1,6 +1,7 @@
 import { Counter } from "../components/Counter";
 import type { GetServerSideProps } from "next";
 import moment from "moment";
+import Link from "next/link";
 
 export interface GlobalData {
   updated: Date;
@@ -144,8 +145,13 @@ const Home = ({ data }: { data: GlobalData }) => {
         </section>
       </section>
 
-      <div className="font-semibold text-sm md:text-md text-white p-4 mx-4 w-full text-center">
-        * Last update: {lastUpdate} *
+      <div className="w-full flex flex-col gap-4 md:gap-0 md:flex-row justify-between items-center p-4">
+        <div className=" mx-4 font-semibold text-xs md:text-md text-white text-center">
+          * Last update: {lastUpdate} *
+        </div>
+        <div className="p-4 mx-4 text-normal text-white bg-black rounded-md">
+          Powered by <Link href="https://disease.sh" passHref><a href="#" target="_blank"><span className="text-blue-500 cursor-pointer">disease.sh</span></a></Link>
+        </div>
       </div>
     </div>
   );

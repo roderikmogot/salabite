@@ -20,9 +20,22 @@ function MyApp({ Component, pageProps }: AppProps) {
     return (
       <>
         <Head>
-          <title>Salabite - COVID-19 Statistics</title>
-          <meta name="description" content="COVID-19 global statistics by Mathdro API" />
-          <link rel="icon" href="/favicon.ico" />
+          <title>COVID-19 Statistics</title>
+          <link rel="icon" href="/favicon.png" />
+
+          <meta name="title" content="covid19" />
+          <meta
+            name="description"
+            content="COVID-19 global statistics by disease.sh"
+          />
+          <meta name="keywords" content="COVID-19, Disease" />
+          <meta property="og:type" content="website" />
+          <meta property="og:url" content="https://salabite.vercel.app/" />
+          <meta property="og:title" content="https://salabite.vercel.app/" />
+          <meta
+            property="og:description"
+            content="COVID-19 global statistics by disease.sh"
+          />
         </Head>
         <Navbar />
         <Component {...pageProps} />
