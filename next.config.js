@@ -2,7 +2,9 @@
 const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
-  images: ["https://countryflagsapi.com"]
-}
+  images: {
+    domains: ["https://countryflagsapi.com"],
+  },
+};
 
-module.exports = nextConfig
+module.exports = nextConfig;
