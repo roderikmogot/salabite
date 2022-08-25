@@ -21,7 +21,7 @@ export default function TopNCases() {
     return <p>Loading...</p>;
   }
 
-  const flagLoader = ({ src }) => {
+  const flagLoader = ({ src }: { src: string }) => {
     return `https://countryflagsapi.com/png/${src}`;
   };
 
@@ -63,7 +63,9 @@ export default function TopNCases() {
                 <>
                   <h1
                     key={i}
-                    className={`${i > 0 ? "mt-8": ""} text-center font-bold text-white text-4xl my-4 flex items-center gap-4 justify-center`}
+                    className={`${
+                      i > 0 ? "mt-8" : ""
+                    } text-center font-bold text-white text-4xl my-4 flex items-center gap-4 justify-center`}
                   >
                     {country}
                     <div className="w-8 h-auto">
@@ -79,7 +81,10 @@ export default function TopNCases() {
                   </h1>
                   <div className="grid w-2/3 gap-4 lg:grid-cols-3 lg:grid-rows-1">
                     <Box caseType="Confirmed" value={confirmed} />
-                    <Box caseType="Recovered" value={recovered ? recovered : 0} />
+                    <Box
+                      caseType="Recovered"
+                      value={recovered ? recovered : 0}
+                    />
                     <Box caseType="Deaths" value={deaths} />
                   </div>
                 </>
